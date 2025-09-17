@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Manage Dishes - {{restaurant.name}}</h2>
+<a href="{{ url_for('owner.add_dish', rest_id=restaurant.id) }}">+ Add Another Dish</a>
+<hr>
+<ul>
+{% for m in restaurant.menu %}
+  <li>
+      {{m.name}} - ₹{{m.price}}
+      <small>
+          | <a href="{{ url_for('owner.edit_dish', rest_id=restaurant.id, dish_id=m.id) }}">Edit</a>
+          | <a href="{{ url_for('owner.manage_ar', rest_id=restaurant.id, dish_id=m.id) }}">Manage AR</a>
+      </small>
+  </li>
+{% else %}
+    <p>No dishes added yet.</p>
+{% endfor %}
+</ul>
+{% endblock %}

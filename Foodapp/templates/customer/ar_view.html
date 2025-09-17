@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+  </head>
+  <body>
+    <a-scene
+      mindar-image="imageTargetSrc: {{ dish.ar_target }}; autoStart: false; filterMinCF:0.0001; filterBeta: 0.001;"
+      color-space="sRGB"
+      renderer="colorManagement: true, physicallyCorrectLights"
+      vr-mode-ui="enabled: false"
+      device-orientation-permission-ui="enabled: false"
+    >
+      <a-assets>
+        <a-asset-item id="dishModel" src="{{ dish.ar_model }}"></a-asset-item>
+      </a-assets>
+
+      <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+
+      <a-entity mindar-image-target="targetIndex: 0">
+        <a-gltf-model
+          rotation="0 0 0"
+          position="0 0 0.1"
+          scale="0.2 0.2 0.2"
+          src="#dishModel"
+          animation="property: rotation; to: 0 360 0; loop: true; dur: 10000; easing: linear;"
+        >
+        </a-gltf-model>
+      </a-entity>
+    </a-scene>
+    
+    <div id="startButton" style="display: flex; justify-content: center; align-items: center; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); color: white; font-family: sans-serif; z-index: 10;">
+        <button style="padding: 15px 30px; font-size: 20px; border: none; border-radius: 10px; background-color: #ff5b00; color: white; cursor: pointer;">Start AR View</button>
+    </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const startButton = document.querySelector('#startButton');
+        const sceneEl = document.querySelector('a-scene');
+        startButton.addEventListener('click', () => {
+          sceneEl.systems['mindar-image'].start();
+          startButton.style.display = 'none';
+        });
+      });
+    </script>
+
+  </body>
+</html>

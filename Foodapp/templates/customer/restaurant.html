@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="grid">
+{% for item in menu %}
+  <div class="card">
+    <img src="{{item.image}}" alt="{{item.name}}" class="dish-img">
+    <h3>{{item.name}}</h3>
+    <p>{{item.description}}</p>
+    <p>₹{{item.price}}</p>
+    
+    {% if item.ar_target and item.ar_model %}
+      <a href="{{ url_for('customer.ar_view', dish_id=item.id) }}" target="_blank" class="ar-button">📷 View in AR</a>
+    {% endif %}
+
+    {% if cart.get(item.id|string) %}
+      {% else %}
+      <a href="{{ url_for('customer.add', item_id=item.id) }}">+ Add</a>
+    {% endif %}
+  </div>
+{% endfor %}
+</div>
+{% endblock %}

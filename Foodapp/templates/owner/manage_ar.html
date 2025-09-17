@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Manage AR for: {{dish.name}}</h2>
+
+<div class="info-box">
+    <h3>How this works:</h3>
+    <ol>
+        <li>Go to the <a href="https://hiukim.github.io/mind-ar-js-compiler/" target="_blank">MindAR Online Compiler</a>.</li>
+        <li>Upload a clear, high-contrast image of your dish. This will be the <b>Target Image</b>.</li>
+        <li>Download the compiled <code>.mind</code> file.</li>
+        <li>Get a 3D model of your dish (<code>.gltf</code> or <code>.glb</code> format). You can find free ones on sites like Sketchfab.</li>
+        <li>Upload both files below.</li>
+    </ol>
+</div>
+
+<form method="post" enctype="multipart/form-data">
+    <h4>Step 1: Upload Compiled Target File (.mind)</h4>
+    <p>Current: {{ dish.ar_target or 'None' }}</p>
+    <input type="file" name="ar_target_file" accept=".mind">
+    <hr>
+    <h4>Step 2: Upload 3D Model File (.gltf, .glb)</h4>
+    <p>Current: {{ dish.ar_model or 'None' }}</p>
+    <input type="file" name="ar_model_file" accept=".gltf,.glb">
+    <br><br>
+    <button type="submit">Save AR Files</button>
+</form>
+
+<style>
+.info-box { background: #eee; border-left: 5px solid #ff5b00; padding: 10px; margin-bottom: 20px; }
+</style>
+{% endblock %}

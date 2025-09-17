@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Add Dish for {{restaurant.name}}</h2>
+<form method="post">
+  <input name="name" placeholder="Dish Name"><br>
+  <input name="price" placeholder="Price"><br>
+  <textarea name="description" placeholder="Description"></textarea><br>
+  <input name="image" placeholder="Image URL"><br>
+  <input name="ar_image" placeholder="AR Image URL"><br>
+  <input name="ar_model" placeholder="AR Model URL (.glb/.usdz)"><br>
+  <label>Commonly Ordered With:</label><br>
+  {% for m in restaurant.menu %}
+    <input type="checkbox" name="common_with" value="{{m.id}}">{{m.name}}<br>
+  {% endfor %}
+  <button type="submit">Save Dish</button>
+</form>
+{% endblock %}

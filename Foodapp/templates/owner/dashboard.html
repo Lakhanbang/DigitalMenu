@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Owner Dashboard</h2>
+<a href="{{ url_for('owner.add_restaurant') }}">+ Add Restaurant</a>
+<ul>
+{% for r in restaurants %}
+  <li>{{r.name}} - <a href="{{ url_for('owner.add_dish', rest_id=r.id) }}">Add Dish</a> | <a href="{{ url_for('owner.manage_dishes', rest_id=r.id) }}">Manage Dishes</a></li>
+{% endfor %}
+</ul>
+{% endblock %}

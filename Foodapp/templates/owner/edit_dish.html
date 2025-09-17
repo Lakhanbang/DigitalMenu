@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Edit Dish: {{dish.name}}</h2>
+<form method="post">
+  <label>Dish Name:</label><br>
+  <input name="name" value="{{ dish.name }}"><br><br>
+
+  <label>Price:</label><br>
+  <input name="price" value="{{ dish.price }}"><br><br>
+
+  <label>Description:</label><br>
+  <textarea name="description">{{ dish.description }}</textarea><br><br>
+
+  <label>Image URL:</label><br>
+  <input name="image" value="{{ dish.image }}"><br><br>
+
+  <label>Commonly Ordered With:</label><br>
+  {% for m in restaurant.menu %}
+    {% if m.id != dish.id %}
+      <input type="checkbox" name="common_with" value="{{m.id}}" {% if m.id|string in dish.common_with %}checked{% endif %}> {{m.name}}<br>
+    {% endif %}
+  {% endfor %}
+  <br>
+  <button type="submit">Update Dish</button>
+</form>
+{% endblock %}

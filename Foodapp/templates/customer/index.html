@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Restaurants</h2>
+<form method="get">
+  <input type="text" name="q" value="{{query}}" placeholder="Search restaurants...">
+  <button type="submit">Search</button>
+</form>
+<ul>
+  {% for r in restaurants %}
+    <li>
+      <a href="{{ url_for('customer.restaurant', rest_id=r.id) }}">{{ r.name }}</a> - {{r.address}}
+    </li>
+  {% endfor %}
+</ul>
+{% endblock %}
