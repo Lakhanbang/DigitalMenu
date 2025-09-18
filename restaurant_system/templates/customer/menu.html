@@ -1,0 +1,53 @@
+<!-- templates/customer/menu.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="menu-container">
+    <h2>Our Menu</h2>
+    
+    <div class="menu-tabs">
+        <a href="{{ url_for('customer_menu', category='all') }}" class="tab {% if category == 'all' %}active{% endif %}">All</a>
+        <a href="{{ url_for('customer_menu', category='breakfast') }}" class="tab {% if category == 'breakfast' %}active{% endif %}">Breakfast</a>
+        <a href="{{ url_for('customer_menu', category='lunch') }}" class="tab {% if category == 'lunch' %}active{% endif %}">Lunch</a>
+        <a href="{{ url_for('customer_menu', category='dinner') }}" class="tab {% if category == 'dinner' %}active{% endif %}">Dinner</a>
+        <a href="{{ url_for('customer_menu', category='special') }}" class="tab {% if category == 'special' %}active{% endif %}">Special</a>
+    </div>
+    
+    <div class="search-bar">
+        <input type="text" id="search-input" placeholder="Search dishes..." value="{{ search }}">
+        <button id="search-btn">Search</button>
+    </div>
+    
+    <div class="dishes-grid">
+        {% for dish in dishes %}
+        <div class="dish-card">
+            <img src="{{ dish.image_url or url_for('static', filename='images/placeholder.jpg') }}" alt="{{ dish.name }}">
+            <div class="dish-info">
+                <h3>{{ dish.name }}</h3>
+                <p class="price">${{ "%.2f"|format(dish.price) }}</p>
+            </div>
+            <div class="dish-actions">
+                <button class="quantity-btn minus" data-dish-id="{{ dish.id }}">-</button>
+                <span class="quantity" id="quantity-{{ dish.id }}">0</span>
+                <button class="quantity-btn plus" data-dish-id="{{ dish.id }}">+</button>
+            </div>
+            <a href="{{ url_for('dish_detail', dish_id=dish.id) }}" class="view-details">View Details</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="cart-icon" id="cart-icon">
+    <span class="cart-count">0</span>
+    🛒
+</div>
+
+<div class="cart-panel" id="cart-panel">
+    <h3>Your Cart</h3>
+    <div id="cart-items"></div>
+    <div class="cart-total">
+        Total: $<span id="cart-total-amount">0.00</span>
+    </div>
+    <button id="checkout-btn">Checkout</button>
+</div>
+{% endblock %}
